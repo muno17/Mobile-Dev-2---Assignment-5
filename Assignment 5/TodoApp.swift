@@ -1,0 +1,34 @@
+import SwiftUI
+import FirebaseCore
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
+
+@main
+struct TodoApp: App {
+
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var todos = TodoViewModel()
+    @StateObject var auth = AuthViewModel()
+
+    var body: some Scene {
+        WindowGroup {
+            Group {
+                if auth.user == nil {
+                    AuthView()
+                } else {
+                    ContentView()
+                }
+            }
+            .environmentObject(todos)
+            .environmentObject(auth)
+        }
+    }
+}
