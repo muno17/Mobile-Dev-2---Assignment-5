@@ -10,6 +10,13 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
+                NavigationLink {
+                    TodoDetail(todo: $newTodo)
+                } label: {
+                    Text("+ Add New To-Do")
+                        .foregroundStyle(.blue)
+                }
+
                 ForEach($todovm.todos) { $todo in
                     NavigationLink {
                         TodoDetail(todo: $todo)
@@ -28,23 +35,9 @@ struct ContentView: View {
                     }
                     todovm.todos.remove(atOffsets: offsets)
                 }
-
-                Section {
-                    NavigationLink {
-                        TodoDetail(todo: $newTodo)
-                    } label: {
-                        Text("Add New To-Do")
-                            .foregroundStyle(.gray)
-                    }
-                }
             }
             .navigationTitle("My To-Dos")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(auth.user?.email ?? "")
-                        .font(.caption)
-                        .foregroundStyle(.gray)
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Logout") {
                         auth.logout()
