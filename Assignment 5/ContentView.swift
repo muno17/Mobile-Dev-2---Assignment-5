@@ -14,8 +14,9 @@ struct ContentView: View {
                 } label: {
                     Text("+ Add New To-Do")
                         .foregroundStyle(.blue)
-                        .padding(.horizontal)
-                        .padding(.vertical, 12)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 8)
+                        .padding(.bottom, 16)
                 }
 
                 List {
@@ -45,6 +46,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("My To-Dos")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

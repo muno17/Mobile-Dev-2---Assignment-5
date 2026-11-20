@@ -16,7 +16,7 @@ class AuthViewModel : ObservableObject {
     private var handle : AuthStateDidChangeListenerHandle?
 
     init() {
-        // Fires on launch and on every login/logout, so the session persists
+        // fires on launch and on every login/logout so the session persists for the user
         handle = Auth.auth().addStateDidChangeListener { _, user in
             self.user = user
         }

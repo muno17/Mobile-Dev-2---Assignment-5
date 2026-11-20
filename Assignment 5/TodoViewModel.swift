@@ -15,7 +15,7 @@ class TodoViewModel : ObservableObject {
 
     let db = Firestore.firestore()
 
-    // Each user gets their own collection: users/{uid}/todos
+    // each user gets their own collection: users/{uid}/todos
     private func collection(for uid: String) -> CollectionReference {
         db.collection("users").document(uid).collection("todos")
     }
@@ -43,7 +43,7 @@ class TodoViewModel : ObservableObject {
             if !todo.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 if let id = todo.id {
                     try collection(for: uid).document(id).setData(from: todo)
-                    // Keep the on-screen list in sync with what was just saved
+                    // keep the on-screen list in sync with what was just saved
                     if let index = todos.firstIndex(where: { $0.id == id }) {
                         todos[index] = todo
                     }
