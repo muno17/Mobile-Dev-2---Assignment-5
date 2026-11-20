@@ -43,6 +43,10 @@ class TodoViewModel : ObservableObject {
             if !todo.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 if let id = todo.id {
                     try collection(for: uid).document(id).setData(from: todo)
+                    // Keep the on-screen list in sync with what was just saved
+                    if let index = todos.firstIndex(where: { $0.id == id }) {
+                        todos[index] = todo
+                    }
                 } else {
                     try collection(for: uid).addDocument(from: todo)
                 }

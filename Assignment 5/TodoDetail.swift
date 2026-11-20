@@ -10,21 +10,25 @@ import FirebaseAuth
 
 struct TodoDetail: View {
 
-    @Binding var todo : TodoModel
+    @State private var draft : TodoModel
     @EnvironmentObject var todovm : TodoViewModel
     @EnvironmentObject var auth : AuthViewModel
     @Environment(\.dismiss) var dismiss
 
+    init(todo: TodoModel) {
+        _draft = State(initialValue: todo)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            TextField("What needs to be done?", text: $todo.title)
+            TextField("What needs to be done?", text: $draft.title)
                 .font(.title)
                 .fontWeight(.bold)
 
-            TextEditor(text: $todo.content)
-                .frame(minHeight: 120)
+            TextField("Details", text: $draft.content, axis: .vertical)
+                .lineLimit(5...)
 
-            Toggle("Completed", isOn: $todo.isDone)
+            Toggle("Completed", isOn: $draft.isDone)
 
             Spacer()
         }
@@ -33,11 +37,8 @@ struct TodoDetail: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Save") {
                     if let uid = auth.user?.uid {
-                        todovm.saveData(todo: todo, uid: uid)
+                        todovm.saveData(todo: draft, uid: uid)
                     }
-                    todo.title = ""
-                    todo.content = ""
-                    todo.isDone = false
                     dismiss()
                 }
             }
@@ -46,7 +47,7 @@ struct TodoDetail: View {
 }
 
 #Preview {
-    TodoDetail(todo: .constant(TodoModel(title: "Buy milk", content: "2%", isDone: false)))
+    TodoDetail(todo: TodoModel(title: "Buy milk", content: "2% or whole", isDone: false))
         .environmentObject(TodoViewModel())
         .environmentObject(AuthViewModel())
 }
