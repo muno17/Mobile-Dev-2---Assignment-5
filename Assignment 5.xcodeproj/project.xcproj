@@ -28,6 +28,7 @@
         { "path": "<PRODUCTS>/Assignment 5.app", "id": "000000000000000000000120", "type": "wrapper.application", "index": false },
       ],
     },
+    { "path": "README 2.md", "target-membership": [ "Assignment 5/resources" ] },
   ],
   "targets": [
     {
